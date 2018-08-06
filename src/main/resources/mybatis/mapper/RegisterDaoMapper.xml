@@ -4,7 +4,6 @@
 
 <mapper namespace="com.justh5.experiment.mapper.StudentDao">
 
-
  <resultMap id="StudentRegisterModel" type="com.justh5.experiment.model.StudentRegisterModel">
      <result column="stuId" property="stuId"/>
      <result column="stuName" property="stuName"/>
