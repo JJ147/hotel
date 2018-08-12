@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.justh5.experiment.mapper.QuestionDao">
+
+ <resultMap id="QuestionModel" type="com.justh5.experiment.model.questionBank.QuestionModel">
+     <result column="quesId" property="quesId"/>
+     <result column="question" property="question"/>
+     <result column="answer" property="answer"/>
+     <result column="answer1" property="answer1"/>
+     <result column="answer2" property="answer2"/>
+     <result column="answer3" property="answer3"/>
+     <result column="quesType" property="quesType"/>
+     <result column="keyPoint" property="keyPoint"/>
+     <result column="subject" property="subject"/>
+     <result column="status" property="status"/>
+ </resultMap>
+
+ <resultMap id="QuestionQueryModel" type="com.justh5.experiment.model.questionBank.QuestionQueryModel">
+     <result column="quesId" property="quesId"/>
+     <result column="quesType" property="quesType"/>
+     <result column="subject" property="subject"/>
+     <result column="status" property="status"/>
+ </resultMap>
+
+    <select id="getQuestionMsg" parameterType="map" resultMap="QuestionModel">
+        select
+        quesId,question,answer,answer1,answer2,answer3,quesType,keyPoint,subject
+        from questions
+        <where>
+            status != 0
+            <if test="quesId !=null">
+                and quesId = #{quesId}
+            </if>
+            <if test="quesType != null and quesType != ''">
+                and quesType #= {quesType}
+            </if>
+        </where>
+    </select>
+    <insert id="addQuestion" parameterType="com.justh5.experiment.model.questionBank.QuestionModel">
+        insert into questions (question,answer,answer1,answer2,answer3,quesType,keyPoint,subject)
+        value (#{question},#{answer},#{answer1},#{answer2},#{answer3},#{quesType},#{keyPoint},#{subject})
+    </insert>
+    <update id="updateQuestion" parameterType="com.justh5.experiment.model.questionBank.QuestionModel">
+        update questions
+        set question = #{question},answer = #{answer},answer1 = #{answer1},answer2 = #{answer2},answer3 = #{answer3},quesType = #{quesType},keyPoint = #{keyPoint},subject = #{subject}
+    </update>
+    <update id="deleteQueestionByid" parameterType="com.justh5.experiment.model.questionBank.QuestionModel">
+        update questions
+        set status = 0 where quesId = #{quesId}
+    </update>
+</mapper>
