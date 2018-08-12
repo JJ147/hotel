@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新试题</title>
+    <link rel="stylesheet" href="/js/layui/css/layui.css"  media="all">
+
+</head>
+<body>
+<from class="layui-form layui-condition-form-box">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">试题:</label>
+            <div class="layui-input-block">
+                <input  id="question" type="text" name="title" lay-verify="required" placeholder="试题" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">答案1:</label>
+            <div class="layui-input-block">
+                <input  id="answer" type="text" name="title" lay-verify="required" placeholder="答案1" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">答案2:</label>
+            <div class="layui-input-block">
+                <input id="answer1" type="text" name="title" lay-verify="required" placeholder="答案2" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">答案3:</label>
+            <div class="layui-input-block">
+                <input    id="answer2" type="text" name="title" lay-verify="required" placeholder="答案3" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">答案4:</label>
+            <div class="layui-input-block">
+                <input    id="answer3" type="text" name="title" lay-verify="required" placeholder="答案4" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">题型:</label>
+            <div class="layui-input-block">
+                <input    id="quesType" type="text" name="title" lay-verify="required" placeholder="题型" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">答题解析:</label>
+            <div class="layui-input-block">
+                <input    id="keyPoint" type="text" name="title" lay-verify="required" placeholder="答题解析" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">
+            <label class="layui-form-label">科目:</label>
+            <div class="layui-input-block">
+                <input    id="subject" type="text" name="title" lay-verify="required" placeholder="科目" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+    </div>
+    <blockquote class="condition-button-box">
+        <div class="layui-inline">
+            <button id="addQuestion" class="layui-btn layui-btn-primary layui-first-btn" >提交</button>
+        </div>
+    </blockquote>
+</from>
+    <script src="../../js/layui/layui.js" charset="utf-8"></script>
+    <!--<script src="../../js/layui/layui.js"></script>-->
+    <script>
+        layui.use(['jquery','form'], function () {
+            var quesId = location.href.split('=')[1];
+            if (quesId && parseInt(quesId) > 0) {
+                $.post("/question/queryQuestion", {quesId: quesId},
+                    function (result) {
+                        if(result&&result.code==1){
+                            $('#question').val(result.data.question);
+                        }
+                    })
+            }
+            var $ = layui.jquery;
+            var form = layui.form;
+            $("#addQuestion").click(function () {
+                var question = $('#question').val();
+                var answer = $('#answer').val();
+                var answer1 = $('#answer1').val();
+                var answer2 = $('#answer2').val();
+                var answer3 = $('#answer3').val();
+                var quesType = $('#quesType').val();
+                var keyPoint = $('#keyPoint').val();
+                var subject = $('#subject').val();
+                console.log(2313)
+                if (question == null ){
+                    alert("请填写题目")
+                    return false;
+                }
+                if (answer == null){
+                    alert("请填写答案1")
+                    return false;
+                }
+                if (answer1 == null){
+                    alert("请填写答案2")
+                    return false;
+                }
+                if (answer2 == null){
+                    alert("请填写答案3")
+                    return false;
+                }
+                if (answer3 == null){
+                    alert("请填写答案4")
+                    return false;
+                }
+                if (quesType == null){
+                    alert("请填写题型")
+                    return false;
+                }
+                if (keyPoint == null){
+                    alert("请填写试题解析点")
+                    return false;
+                }
+                if (subject == null){
+                    alert("请填写科目")
+                    return false;
+                }
+                addQuestion()
+            })
+            console.log(111)
+            // 新增试题
+            function addQuestion() {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/question/addQuestions",
+                    data: {
+                        "question": $("#question").val(),
+                        "answer": $("#answer").val(),
+                        "answer1": $("#answer1").val(),
+                        "answer2": $("#answer2").val(),
+                        "answer3": $("#answer3").val(),
+                        "quesType": $("#quesType").val(),
+                        "keyPoint": $("#keyPoint").val(),
+                        "subject": $("#subject").val()
+                    },
+                    success: function (data) {
+                        console.log(data.answer)
+                        if (data.code == 0) {
+                            alert("添加试题成功！")
+                        } else {
+                            alert("添加试题失败！")
+                        }
+                    },
+                    error: function(data){
+                        alert(JSON.stringify(data))
+                    }
+                });
+            }
+        });
+</script>
+
+</body>
+</html>
