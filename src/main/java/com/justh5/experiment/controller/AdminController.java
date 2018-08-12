@@ -83,4 +83,9 @@ public class AdminController {
             return new SysResult(99, "fail");
         }
     }
+    @CrossOrigin
+    @RequestMapping("mangement")
+    public Object jumpToView1(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+        return new ModelAndView("admin/questionMangemrnt");
+    }
 }

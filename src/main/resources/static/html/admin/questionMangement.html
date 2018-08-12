@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <head th:include="public :: publicHead('题库')"></head>
+    <title>题库</title>
+    <link rel="stylesheet" href="../js/layui/css/layui.css"  media="all">
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/bodyTab.js"></script>
+    <script src="../../js/cache.js"></script>
+</head>
+<body class="middle-frame-box">
+
+<blockquote class="layui-elem-quote quoteBox">
+    <form class="layui-form layui-condition-form-box">
+        <!--<div class="layui-row layui-col-space10">-->
+            <!--<div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">-->
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">试题ID：</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" id="quesId" placeholder="请输出试题编号" name="questionsID" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">-->
+            <div class="layui-inline">
+                <label class="layui-form-label">题型：</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" id="quesType" placeholder="请输入您要搜查的题型" name="questionType" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="layui-col-md4 layui-col-lg4 layui-col-xs4 layui-col-sm4 layui-form-item">-->
+            <div class="layui-inline">
+                <label class="layui-form-label">科目：</label>
+                <div class="layui-input-block">
+                    <div class="layui-input-block">
+                        <input type="text" id="subject" placeholder="请输入您要搜查的科目" name="subjectName" autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <blockquote class="condition-button-box">
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-normal" lay-submit="questionSearch" lay-filter="questionForm" >查询</a>
+            </div>
+            <div class="layui-inline">
+                <a id="exportExcel" class="layui-btn  layui-btn-primary layui-second-btn" lay-filter="exportExcel">导出</a>
+            </div>
+            <div class="layui-inline">
+                <a id="addQuestion" class="layui-btn  layui-btn-primary layui-second-btn" lay-filter="addQuestion">新增</a>
+            </div>
+        </blockquote>
+    </form>
+</blockquote>
+<div class="layui-tab-content">
+    <div class="layui-tab-item layui-show" style="overflow: hidden !important;">
+        <table id="pageNums_1" class="layui-table" lay-filter="pageNums_1"></table>
+        <div  class="layui-table-page" id="pageNums_2" >
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/question/quetion.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</body>
+</html>

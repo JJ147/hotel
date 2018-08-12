@@ -2,6 +2,8 @@ package com.justh5.experiment.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.justh5.experiment.filter.CrossDomainInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -91,5 +94,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
         return objectMapper;
+    }
+
+    @Autowired
+    private CrossDomainInterceptor crossDomainInterceptor;
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //注册自定义拦截器，添加拦截路径和排除拦截路径
+        registry.addInterceptor(crossDomainInterceptor).addPathPatterns("/**");
     }
 }
